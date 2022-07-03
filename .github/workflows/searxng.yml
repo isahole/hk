@@ -11,9 +11,10 @@ jobs:
       - uses: isahole/forks@main
         with:
           github_token: ${{ secrets.PAT }}
-          upstream_repository: searxng/searxng
+          #upstream_repository: searxng/searxng
+          upstream_repository: yellowhat/searx-heroku  
           target_repository: isahole/hk
-          upstream_branch: master
+          upstream_branch: searxng
           target_branch: searxng
           force: true
           tags: true
