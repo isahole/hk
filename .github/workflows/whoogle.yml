@@ -1,0 +1,33 @@
+name: Whoogle Sync
+on:
+  schedule:
+    - cron:  '0 4 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  whoogle_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: isahole/forks@main
+        with:
+          github_token: ${{ secrets.PAT }}
+          upstream_repository: benbusby/whoogle-search
+          target_repository: isahole/hk
+          upstream_branch: main
+          target_branch: whoogle
+          force: true
+          tags: true
+  whoogle_push:
+    needs: whoogle_sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: whoogle
+      - run: |
+          rm -rf .github
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "$(date "+%Y%m%d-%H%M")"
+          git push
