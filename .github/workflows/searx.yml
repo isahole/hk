@@ -1,0 +1,20 @@
+name: searX Sync
+on:
+  schedule:
+    - cron:  '0 5 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  searx_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: isahole/forks@main
+        with:
+          github_token: ${{ secrets.PAT }}
+          upstream_repository: yellowhat/searx-heroku
+          target_repository: isahole/hk
+          upstream_branch: main
+          target_branch: searx
+          force: true
+          tags: true
+ 
